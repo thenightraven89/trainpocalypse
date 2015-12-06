@@ -5,25 +5,32 @@ namespace Funk
 {
     public class Main : MonoBehaviour
     {
+        private const int PLAYER_LIFE = 10;
+
         private Match _match;
-        private MatchVisuals _visuals;
+        private MatchInput _input;
+        private MatchPlayback _playback;
 
         private void Awake()
         {
             var data = new PlayerData[2]
             {
-                new PlayerData() { Name = "Player1", Model = "BlueTrain" },
-                new PlayerData() { Name = "Player2", Model = "RedTrain" }
+                new PlayerData() { Name = "Player1", Model = "BlueTrain", Life = PLAYER_LIFE },
+                new PlayerData() { Name = "Player2", Model = "RedTrain", Life = PLAYER_LIFE }
             };
 
             _match = new Match(data);
-            _visuals = new MatchVisuals(data);
+
+            _input = new MatchInput(data);
+
+            _playback = new MatchPlayback();
         }
 
         private void Update()
         {
-            var state = _match.Update();
-            _visuals.Update(state);
+            var actions = _input.GetActions();
+
+            _playback.Play(actions);
         }
     }
 }

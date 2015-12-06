@@ -5,22 +5,26 @@ namespace Funk
 {
     public class Match
     {
-        private MatchData _state;
+        private MatchData _matchData;
         private IPlayer[] _players;
 
-        public Match(PlayerData[] data)
+        public Match(PlayerData[] playerData)
         {
-            var playerCount = data.Length;
+            var playerCount = playerData.Length;
 
             _players = new IPlayer[playerCount];
 
             for (int i = 0; i < playerCount; i++)
             {
-                _players[i] = new LocalPlayer(data[i]);
+                _players[i] = new LocalPlayer(playerData[i]);
             }
 
-
-            _state = new MatchData();
+            _matchData = new MatchData();
+            _matchData.PlayerLife = new int[playerCount];
+            for (int i = 0; i < playerCount; i++)
+            {
+                _matchData.PlayerLife[i] = 0;
+            }
         }
 
         public MatchData Update()
@@ -30,7 +34,7 @@ namespace Funk
                 _players[i].Update();
             }
 
-            return _state;
+            return _matchData;
         }
     }
 }

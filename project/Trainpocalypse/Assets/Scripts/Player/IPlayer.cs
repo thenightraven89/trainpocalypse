@@ -1,7 +1,9 @@
-﻿namespace Funk.Player
+﻿using Funk.Data;
+
+namespace Funk.Player
 {
     public interface IPlayer
     {
-        void Update();
+        Action GetAction();
     }
 }
