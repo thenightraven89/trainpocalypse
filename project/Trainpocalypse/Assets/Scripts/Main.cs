@@ -15,8 +15,17 @@ namespace Funk
         {
             var data = new PlayerData[2]
             {
-                new PlayerData() { Name = "Player1", Model = "BlueTrain", Life = PLAYER_LIFE },
-                new PlayerData() { Name = "Player2", Model = "RedTrain", Life = PLAYER_LIFE }
+                new PlayerData() {
+                    Name = "Player1",
+                    Model = "BlueTrain",
+                    Life = PLAYER_LIFE,
+                    SelectedInputMap = InputMap.KeyboardWASD },
+
+                new PlayerData() {
+                    Name = "Player2",
+                    Model = "RedTrain",
+                    Life = PLAYER_LIFE,
+                    SelectedInputMap = InputMap.KeyboardArrows }
             };
 
             _match = new Match(data);

@@ -27,6 +27,7 @@ namespace Funk
             for (int i = 0; i < _players.Length; i++)
             {
                 var action = _players[i].GetAction();
+                UnityEngine.Debug.Log(action);
                 _actions.Add(action);
             }
 
