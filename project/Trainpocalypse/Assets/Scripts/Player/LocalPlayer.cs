@@ -33,11 +33,11 @@ namespace Funk.Player
         {
             _name = playerData.Name;
             _inputSuffix = ((byte)playerData.SelectedInputMap).ToString();
-            _noAction = new Action { PlayerName = _name, Type = Action.ActionType.None };
-            _moveU = new Action { PlayerName = _name, Type = Action.ActionType.MoveUp };
-            _moveD = new Action { PlayerName = _name, Type = Action.ActionType.MoveDown };
-            _moveL = new Action { PlayerName = _name, Type = Action.ActionType.MoveLeft };
-            _moveR = new Action { PlayerName = _name, Type = Action.ActionType.MoveRight };
+            _noAction = new Action { PlayerName = _name, Type = ActionType.None };
+            _moveU = new Action { PlayerName = _name, Type = ActionType.MoveUp };
+            _moveD = new Action { PlayerName = _name, Type = ActionType.MoveDown };
+            _moveL = new Action { PlayerName = _name, Type = ActionType.MoveLeft };
+            _moveR = new Action { PlayerName = _name, Type = ActionType.MoveRight };
             _previousAction = _noAction;
         }
 

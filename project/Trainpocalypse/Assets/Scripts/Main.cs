@@ -17,28 +17,25 @@ namespace Funk
             {
                 new PlayerData() {
                     Name = "Player1",
-                    Model = "BlueTrain",
+                    Train = "BlueTrain",
                     Life = PLAYER_LIFE,
                     SelectedInputMap = InputMap.KeyboardWASD },
 
                 new PlayerData() {
                     Name = "Player2",
-                    Model = "RedTrain",
+                    Train = "RedTrain",
                     Life = PLAYER_LIFE,
                     SelectedInputMap = InputMap.KeyboardArrows }
             };
 
             _match = new Match(data);
-
             _input = new MatchInput(data);
-
-            _playback = new MatchPlayback();
+            _playback = new MatchPlayback(data);
         }
 
         private void Update()
         {
             var actions = _input.GetActions();
-
             _playback.Play(actions);
         }
     }

@@ -6,17 +6,17 @@ namespace Funk
 {
     public class MatchInput
     {
-        private IPlayer[] _players;
+        private List<IPlayer> _players;
         private List<Action> _actions;
 
         public MatchInput(PlayerData[] playerData)
         {
+            _players = new List<IPlayer>();
             _actions = new List<Action>();
-
-            _players = new IPlayer[playerData.Length];
-            for (int i = 0; i < _players.Length; i++)
+            
+            foreach (var player in playerData)
             {
-                _players[i] = new LocalPlayer(playerData[i]);
+                _players.Add(new LocalPlayer(player));
             }
         }
 
@@ -24,7 +24,7 @@ namespace Funk
         {
             _actions.Clear();
 
-            for (int i = 0; i < _players.Length; i++)
+            for (int i = 0; i < _players.Count; i++)
             {
                 var action = _players[i].GetAction();
                 UnityEngine.Debug.Log(action);
