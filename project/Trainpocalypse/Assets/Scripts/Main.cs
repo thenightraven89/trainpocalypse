@@ -13,24 +13,31 @@ namespace Funk
 
         private void Awake()
         {
-            var data = new PlayerData[2]
+            var mapData = new MapData
             {
-                new PlayerData() {
-                    Name = "Player1",
-                    Train = "BlueTrain",
-                    Life = PLAYER_LIFE,
-                    SelectedInputMap = InputMap.KeyboardWASD },
-
-                new PlayerData() {
-                    Name = "Player2",
-                    Train = "RedTrain",
-                    Life = PLAYER_LIFE,
-                    SelectedInputMap = InputMap.KeyboardArrows }
+                Name = "DefaultMap"
             };
 
-            _match = new Match(data);
-            _input = new MatchInput(data);
-            _playback = new MatchPlayback(data);
+            var playerData = new PlayerData[2]
+            {
+                new PlayerData() {
+                    Index = 0,
+                    Name = "Player1",
+                    Train = "RedTrain",
+                    Life = PLAYER_LIFE,
+                    InputMap = InputMap.KeyboardWASD },
+
+                new PlayerData() {
+                    Index = 1,
+                    Name = "Player2",
+                    Train = "BlueTrain",
+                    Life = PLAYER_LIFE,
+                    InputMap = InputMap.KeyboardArrows }
+            };
+
+            _match = new Match(mapData, playerData);
+            _input = new MatchInput(_match);
+            _playback = new MatchPlayback(_match);
         }
 
         private void Update()

@@ -14,11 +14,11 @@ namespace Funk.Player
 
         private string _name;
         private string _inputSuffix;
-        private Action _noAction;
-        private Action _moveU;
-        private Action _moveD;
-        private Action _moveL;
-        private Action _moveR;
+        private PlayerAction _noAction;
+        private PlayerAction _moveU;
+        private PlayerAction _moveD;
+        private PlayerAction _moveL;
+        private PlayerAction _moveR;
 
         private float _axisH;
         private float _axisV;
@@ -27,21 +27,21 @@ namespace Funk.Player
         private bool _dpadL;
         private bool _dpadR;
 
-        private Action _previousAction;
+        private PlayerAction _previousAction;
 
         public LocalPlayer(PlayerData playerData)
         {
             _name = playerData.Name;
-            _inputSuffix = ((byte)playerData.SelectedInputMap).ToString();
-            _noAction = new Action { PlayerName = _name, Type = ActionType.None };
-            _moveU = new Action { PlayerName = _name, Type = ActionType.MoveUp };
-            _moveD = new Action { PlayerName = _name, Type = ActionType.MoveDown };
-            _moveL = new Action { PlayerName = _name, Type = ActionType.MoveLeft };
-            _moveR = new Action { PlayerName = _name, Type = ActionType.MoveRight };
+            _inputSuffix = ((byte)playerData.InputMap).ToString();
+            _noAction = new PlayerAction { PlayerName = _name, Type = ActionType.None };
+            _moveU = new PlayerAction { PlayerName = _name, Type = ActionType.MoveUp };
+            _moveD = new PlayerAction { PlayerName = _name, Type = ActionType.MoveDown };
+            _moveL = new PlayerAction { PlayerName = _name, Type = ActionType.MoveLeft };
+            _moveR = new PlayerAction { PlayerName = _name, Type = ActionType.MoveRight };
             _previousAction = _noAction;
         }
 
-        public Action GetAction()
+        public PlayerAction GetAction()
         {
             _axisH = Input.GetAxis(PREFIX_AXIS_HORIZONTAL + _inputSuffix);
             _axisV = Input.GetAxis(PREFIX_AXIS_VERTICAL + _inputSuffix);

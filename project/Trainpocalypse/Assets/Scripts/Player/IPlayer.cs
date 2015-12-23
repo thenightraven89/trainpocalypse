@@ -4,6 +4,6 @@ namespace Funk.Player
 {
     public interface IPlayer
     {
-        Action GetAction();
+        PlayerAction GetAction();
     }
 }

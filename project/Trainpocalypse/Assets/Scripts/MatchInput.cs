@@ -7,27 +7,26 @@ namespace Funk
     public class MatchInput
     {
         private List<IPlayer> _players;
-        private List<Action> _actions;
+        private List<PlayerAction> _actions;
 
-        public MatchInput(PlayerData[] playerData)
+        public MatchInput(Match match)
         {
             _players = new List<IPlayer>();
-            _actions = new List<Action>();
+            _actions = new List<PlayerAction>();
             
-            foreach (var player in playerData)
+            foreach (var player in match.PlayerData)
             {
                 _players.Add(new LocalPlayer(player));
             }
         }
 
-        public List<Action> GetActions()
+        public List<PlayerAction> GetActions()
         {
             _actions.Clear();
 
             for (int i = 0; i < _players.Count; i++)
             {
                 var action = _players[i].GetAction();
-                UnityEngine.Debug.Log(action);
                 _actions.Add(action);
             }
 

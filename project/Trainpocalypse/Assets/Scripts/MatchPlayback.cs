@@ -6,25 +6,39 @@ namespace Funk
 {
     public class MatchPlayback
     {
-        private const string PATH_TRAINS = "/Trains/";
+        private const string PATH_TRAINS = "Prefabs/Trains/";
+        private const string PATH_MAPS = "Prefabs/Maps/";
 
         private Dictionary<string, Train> _trains;
+        private List<Transform> _spawnPoints;
 
-        public MatchPlayback(PlayerData[] playerData)
+        public MatchPlayback(Match match)
         {
+            _spawnPoints = new List<Transform>();
             _trains = new Dictionary<string, Train>();
 
-            foreach (var player in playerData)
+            var mapPath = string.Format("{0}{1}", PATH_MAPS, match.MapData.Name);
+            var mapSource = Resources.Load(mapPath) as GameObject;
+            var mapObject = GameObject.Instantiate(mapSource);
+
+            foreach (var player in match.PlayerData)
             {
+                _spawnPoints.Add(mapObject.transform.Find("Spawn" + player.Index.ToString()));
+
                 var trainPath = string.Format("{0}{1}", PATH_TRAINS, player.Train);
                 var trainSource = Resources.Load(trainPath) as GameObject;
-                var trainObject = GameObject.Instantiate(trainSource);
-                var trainComponent = trainObject.GetComponent<Train>();
+                var trainObject = GameObject.Instantiate(
+                    trainSource,
+                    _spawnPoints[player.Index].position,
+                    _spawnPoints[player.Index].rotation
+                    ) as GameObject;
+
+                var trainComponent = trainObject.AddComponent<Train>();
                 _trains.Add(player.Name, trainComponent);
             }
         }
 
-        public void Play(List<Action> actions)
+        public void Play(List<PlayerAction> actions)
         {
             for (int i = 0; i < actions.Count; i++)
             {

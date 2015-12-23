@@ -2,20 +2,28 @@
 {
     public class Match
     {
-        private PlayerData[] _playerData;
+        public MapData MapData { get; private set; }
+        public PlayerData[] PlayerData { get; private set; }
 
-        public Match(PlayerData[] playerData)
+        public Match(MapData mapData, PlayerData[] playerData)
         {
-            _playerData = playerData;
+            MapData = mapData;
+            PlayerData = playerData;
         }
     }
 
     public struct PlayerData
     {
+        public byte Index;
         public string Name;
         public string Train;
         public int Life;
-        public InputMap SelectedInputMap;
+        public InputMap InputMap;
+    }
+
+    public struct MapData
+    {
+        public string Name;
     }
 
     public enum InputMap : byte
