@@ -10,12 +10,15 @@ namespace Funk
         private Match _match;
         private MatchInput _input;
         private MatchPlayback _playback;
+        private PowerupSpawner _powerupSpawner;
+        private PowerupController _powerupController;
 
         private void Awake()
         {
             var mapData = new MapData
             {
-                Name = "DefaultMap"
+                Name = "DefaultMap",
+                Rezolution = 10
             };
 
             var playerData = new PlayerData[2]
@@ -35,15 +38,22 @@ namespace Funk
                     InputMap = InputMap.KeyboardArrows }
             };
 
-            _match = new Match(mapData, playerData);
+            var matchSettings = new MatchSettings(10, 5,
+                new PowerupSettings[] { new PowerupSettings(typeof(PowerupBase), 3, 0f, 1f) }
+                );
+
+            _match = new Match(mapData, playerData, matchSettings);
             _input = new MatchInput(_match);
             _playback = new MatchPlayback(_match);
+            _powerupSpawner = GetComponent<PowerupSpawner>();
+            _powerupController = new PowerupController(_match, _powerupSpawner);
         }
 
         private void Update()
         {
             var actions = _input.GetActions();
             _playback.Play(actions);
+            _powerupController.Run(Time.deltaTime);
         }
     }
 }

@@ -4,11 +4,13 @@
     {
         public MapData MapData { get; private set; }
         public PlayerData[] PlayerData { get; private set; }
+        public MatchSettings MatchSettings { get; private set; }
 
-        public Match(MapData mapData, PlayerData[] playerData)
+        public Match(MapData mapData, PlayerData[] playerData, MatchSettings matchSettings)
         {
             MapData = mapData;
             PlayerData = playerData;
+            MatchSettings = matchSettings;
         }
     }
 
@@ -24,6 +26,7 @@
     public struct MapData
     {
         public string Name;
+        public int Rezolution;
     }
 
     public enum InputMap : byte
