@@ -52,10 +52,11 @@ namespace Funk
         public void SpawnRandom()
         {
             int x, y;
+            int rez = _mapData.Rezolution / 2;
             do
             {
-                x = UnityEngine.Random.Range(0, _mapData.Rezolution);
-                y = UnityEngine.Random.Range(0, _mapData.Rezolution);
+                x = UnityEngine.Random.Range(-rez, rez);
+                y = UnityEngine.Random.Range(-rez, rez);
             } while (!_spawner.CanSpawn(x, y));
 
             List<Type> availablePowerups = GetAvailablePowerups();

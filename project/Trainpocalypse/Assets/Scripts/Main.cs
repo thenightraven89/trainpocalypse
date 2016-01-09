@@ -18,7 +18,7 @@ namespace Funk
             var mapData = new MapData
             {
                 Name = "DefaultMap",
-                Rezolution = 10
+                Rezolution = 40
             };
 
             var playerData = new PlayerData[2]
@@ -48,6 +48,7 @@ namespace Funk
             _input = new MatchInput(_match);
             _playback = new MatchPlayback(_match);
             _powerupSpawner = GetComponent<PowerupSpawner>();
+            _powerupSpawner.LoadPowerups(_match.MatchSettings.PowerupsAvailable);
             _powerupController = new PowerupController(_match, _powerupSpawner);
         }
 
