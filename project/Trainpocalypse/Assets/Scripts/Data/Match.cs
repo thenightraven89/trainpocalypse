@@ -19,6 +19,7 @@
         public byte Index;
         public string Name;
         public string Train;
+        public string Block;
         public int Life;
         public InputMap InputMap;
     }
