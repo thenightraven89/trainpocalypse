@@ -1,15 +1,21 @@
 ﻿using Funk.Data;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Funk
 {
     public class Train : MonoBehaviour
     {
+        [SerializeField]
+        private GameObject _domino;
+
+        private List<GameObject> _dominoTrail;
         private float _speed = 8f;
         private Vector3 _from;
         private Vector3 _to;
         private Vector3 _direction;
+        private float _tileSize = 1f;
         private Transform _transform;
         private Coroutine _moveCoroutine;
 
@@ -17,6 +23,7 @@ namespace Funk
         {
             _transform = transform;
             _direction = _transform.forward;
+            _dominoTrail = new List<GameObject>();
             _moveCoroutine = StartCoroutine(Move());
         }
 
@@ -25,7 +32,7 @@ namespace Funk
             while (true)
             {
                 _from = _transform.position;
-                _to = _from + _direction;
+                _to = _from + _direction * _tileSize;
                 _transform.rotation = Quaternion.LookRotation(_direction, Vector3.up);
 
                 while (_from != _to)
@@ -36,6 +43,14 @@ namespace Funk
                 }
 
                 _transform.position = _from;
+
+                var newBlock = GameObject.Instantiate(
+                    _domino,
+                    _transform.position,
+                    _transform.rotation) as GameObject;
+
+                newBlock.SetActive(true);
+                _dominoTrail.Add(newBlock);
             }
         }
 

@@ -6,8 +6,9 @@ namespace Funk
 {
     public class MatchPlayback
     {
-        private const string PATH_TRAINS = "Prefabs/Trains/";
-        private const string PATH_MAPS = "Prefabs/Maps/";
+        private const string PATH_BLOCKS = "Blocks/";
+        private const string PATH_TRAINS = "Trains/";
+        private const string PATH_MAPS = "Maps/";
 
         private Dictionary<string, Train> _trains;
         private List<Transform> _spawnPoints;
@@ -33,7 +34,7 @@ namespace Funk
                     _spawnPoints[player.Index].rotation
                     ) as GameObject;
 
-                var trainComponent = trainObject.AddComponent<Train>();
+                var trainComponent = trainObject.GetComponent<Train>();
                 _trains.Add(player.Name, trainComponent);
             }
         }
