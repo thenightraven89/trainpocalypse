@@ -18,7 +18,8 @@ namespace Funk
             var mapData = new MapData
             {
                 Name = "DefaultMap",
-                Rezolution = 40
+                Width = 40,
+                Height = 40
             };
 
             var playerData = new PlayerData[2]

@@ -27,7 +27,8 @@
     public struct MapData
     {
         public string Name;
-        public int Rezolution;
+        public int Width;
+        public int Height;
     }
 
     public enum InputMap : byte
