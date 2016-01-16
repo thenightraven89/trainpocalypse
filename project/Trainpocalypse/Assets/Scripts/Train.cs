@@ -7,11 +7,12 @@ namespace Funk
 {
     public class Train : MonoBehaviour
     {
+        public PlayerState TrainState { get; set;}
+
         [SerializeField]
         private GameObject _domino;
 
         private List<GameObject> _dominoTrail;
-        private float _speed = 8f;
         private Vector3 _from;
         private Vector3 _to;
         private Vector3 _direction;
@@ -37,7 +38,7 @@ namespace Funk
 
                 while (_from != _to)
                 {
-                    _from = Vector3.MoveTowards(_from, _to, _speed * Time.deltaTime);
+                    _from = Vector3.MoveTowards(_from, _to, TrainState.Speed * Time.deltaTime);
                     _transform.position = _from;
                     yield return null;
                 }

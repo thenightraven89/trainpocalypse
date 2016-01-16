@@ -40,7 +40,7 @@ namespace Funk
                     InputMap = InputMap.KeyboardArrows }
             };
 
-            var matchSettings = new MatchSettings(10, 5,
+            var matchSettings = new MatchSettings(10, 5, 8,
                 new PowerupSettings[] { new PowerupSettings(typeof(PowerupBase), 3, 0f, 1f) }
                 );
 

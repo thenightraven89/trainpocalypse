@@ -36,8 +36,10 @@ namespace Funk
                     ) as GameObject;
 
                 var trainComponent = trainObject.GetComponent<Train>();
-                playerStates.Add(new PlayerState(trainComponent,
-                    match.MatchSettings.MaxLives, match.MatchSettings.DefaultPlayerSpeed));
+                var trainState = new PlayerState(trainComponent,
+                    match.MatchSettings.MaxLives, match.MatchSettings.DefaultPlayerSpeed);
+                trainComponent.TrainState = trainState;
+                playerStates.Add(trainState);
                 _trains.Add(player.Name, trainComponent);
             }
 
