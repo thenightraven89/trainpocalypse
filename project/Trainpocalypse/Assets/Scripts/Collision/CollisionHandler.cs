@@ -25,7 +25,6 @@ namespace Funk.Collision
         public void HandleCollision(object sender, CollisionEventArgs args)
         {
             string tag = args.Other.tag;
-            Debug.Log(tag);
             if (_collisionHandlers.ContainsKey(tag))
             {
                 _collisionHandlers[tag].HandleCollision((ICollisionTirgger)sender, args.Other,

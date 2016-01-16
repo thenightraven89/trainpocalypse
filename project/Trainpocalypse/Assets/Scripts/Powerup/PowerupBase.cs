@@ -8,6 +8,11 @@ namespace Funk.Powerup
     {
         [SerializeField]
         private float _duration;
+        [SerializeField]
+        private GameObject _visuals;
+        [SerializeField]
+        private Collider _collider;
+
         private MatchState _matchContext;
         private Train _powerupTarget;
         private PlayerState _affectedPlayerState;
@@ -26,8 +31,15 @@ namespace Funk.Powerup
                 }
             }
             _affectedPlayerState.AddActivePowerup(this);
+            Hide();
             ApplyEffect();
             _waitCoroutine = StartCoroutine(WaitToUnapply());
+        }
+
+        private void Hide()
+        {
+            _collider.enabled = false;
+            _visuals.SetActive(false);
         }
 
         protected virtual void ApplyEffect()
@@ -53,6 +65,7 @@ namespace Funk.Powerup
                 _affectedPlayerState.RemoveActivePowerup(this);
             }
             UnapplyEffect();
+            Destroy(gameObject);
         }
 
         protected virtual void UnapplyEffect()
