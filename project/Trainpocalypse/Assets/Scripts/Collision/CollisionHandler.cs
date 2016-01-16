@@ -25,9 +25,11 @@ namespace Funk.Collision
         public void HandleCollision(object sender, CollisionEventArgs args)
         {
             string tag = args.Other.tag;
+            Debug.Log(tag);
             if (_collisionHandlers.ContainsKey(tag))
             {
-                _collisionHandlers[tag].HandleCollision((ICollisionTirgger)sender, args.Other);
+                _collisionHandlers[tag].HandleCollision((ICollisionTirgger)sender, args.Other,
+                    _match.MatchState);
             }
         }
     }
@@ -46,7 +48,7 @@ namespace Funk.Collision
     {
         string Tag { get; }
 
-        void HandleCollision(ICollisionTirgger t, Collider other);
+        void HandleCollision(ICollisionTirgger t, Collider other, MatchState context);
     }
 
     public interface ICollisionTirgger

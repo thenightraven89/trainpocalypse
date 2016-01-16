@@ -32,7 +32,7 @@ namespace Funk.Powerup
 
         protected virtual void ApplyEffect()
         {
-
+            Debug.Log("Much powerup such pickup wow");
         }
 
         private IEnumerator WaitToUnapply()

@@ -1,4 +1,5 @@
-﻿using Funk.Data;
+﻿using Funk.Collision;
+using Funk.Data;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,11 +13,14 @@ namespace Funk
 
         private Dictionary<string, Train> _trains;
         private List<Transform> _spawnPoints;
+        private CollisionController _collisionCenter;
 
         public MatchPlayback(Match match)
         {
             _spawnPoints = new List<Transform>();
             _trains = new Dictionary<string, Train>();
+            _collisionCenter = new CollisionController(match,
+               new List<ICollisionHandler> { new PowerupCollisionHandler() });
 
             var mapPath = string.Format("{0}{1}", PATH_MAPS, match.MapData.Name);
             var mapSource = Resources.Load(mapPath) as GameObject;
@@ -39,12 +43,14 @@ namespace Funk
                 var trainState = new PlayerState(trainComponent,
                     match.MatchSettings.MaxLives, match.MatchSettings.DefaultPlayerSpeed);
                 trainComponent.TrainState = trainState;
+                trainComponent.SubscribeToCollision(_collisionCenter.HandleCollision);
                 playerStates.Add(trainState);
                 _trains.Add(player.Name, trainComponent);
             }
 
             var matchState = new MatchState(playerStates.ToArray());
             match.Start(matchState);
+           
         }
 
         public void Play(List<PlayerAction> actions)
