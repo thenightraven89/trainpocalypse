@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Funk.Data;
 
-namespace Funk
+namespace Funk.Powerup
 {
     class PowerupController
     {

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 
-namespace Funk
+namespace Funk.Powerup
 {
     public class PowerupSpawner : MonoBehaviour
     {
@@ -22,7 +22,7 @@ namespace Funk
                     if (p.GetType() == pt)
                     {
                         shouldAdd = true;
-                        
+                        break;
                     }
                 }
                 if (shouldAdd)

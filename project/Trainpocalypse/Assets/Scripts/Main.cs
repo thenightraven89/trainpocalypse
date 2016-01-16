@@ -1,4 +1,5 @@
 ﻿using Funk.Data;
+using Funk.Powerup;
 using UnityEngine;
 
 namespace Funk
