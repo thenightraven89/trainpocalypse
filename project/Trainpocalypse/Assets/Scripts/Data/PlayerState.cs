@@ -22,13 +22,12 @@ namespace Funk.Data
         private int _startingLives;
         private List<PowerupBase> _activePowerups;
 
-        public PlayerState(Train train, int startingLives, float defaultSpeed,
-            float defaultDominoDelay)
+        public PlayerState(Train train, int startingLives, float defaultSpeed)
         {
             TrainController = train;
             _startingLives = startingLives;
             _defaultSpeed = defaultSpeed;
-            _defaultDominoDelay = defaultDominoDelay;
+            _defaultDominoDelay = 0f;
             _activePowerups = new List<PowerupBase>();
             Reset();
         }

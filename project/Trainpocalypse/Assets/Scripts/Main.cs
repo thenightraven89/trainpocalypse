@@ -30,7 +30,6 @@ namespace Funk
                     Name = "Player1",
                     Train = "RedTrain",
                     Block = "RedBlock",
-                    Life = PLAYER_LIFE,
                     InputMap = InputMap.KeyboardWASD },
 
                 new PlayerData() {
@@ -38,7 +37,6 @@ namespace Funk
                     Name = "Player2",
                     Train = "BlueTrain",
                     Block = "BlueBlock",
-                    Life = PLAYER_LIFE,
                     InputMap = InputMap.KeyboardArrows }
             };
 

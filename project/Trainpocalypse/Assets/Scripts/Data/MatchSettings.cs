@@ -9,6 +9,8 @@ namespace Funk.Data
     {
         public int MaxLives { get; private set; }
         public int MaxSpawnedPowerups { get; private set; }
+        public int DefaultPlayerSpeed { get; private set; }
+
         public IEnumerable<Type> PowerupsAvailable{ get { return _powerupSettings.Keys; } }
         private Dictionary<Type, PowerupSettings> _powerupSettings;
 

@@ -5,12 +5,18 @@
         public MapData MapData { get; private set; }
         public PlayerData[] PlayerData { get; private set; }
         public MatchSettings MatchSettings { get; private set; }
+        public MatchState MatchState { get; private set; }
 
         public Match(MapData mapData, PlayerData[] playerData, MatchSettings matchSettings)
         {
             MapData = mapData;
             PlayerData = playerData;
             MatchSettings = matchSettings;
+        }
+
+        public void Start(MatchState startState)
+        {
+            MatchState = startState;
         }
     }
 
@@ -20,7 +26,6 @@
         public string Name;
         public string Train;
         public string Block;
-        public int Life;
         public InputMap InputMap;
     }
 

@@ -21,6 +21,7 @@ namespace Funk
             var mapPath = string.Format("{0}{1}", PATH_MAPS, match.MapData.Name);
             var mapSource = Resources.Load(mapPath) as GameObject;
             var mapObject = GameObject.Instantiate(mapSource);
+            var playerStates = new List<PlayerState>();
 
             foreach (var player in match.PlayerData)
             {
@@ -35,8 +36,13 @@ namespace Funk
                     ) as GameObject;
 
                 var trainComponent = trainObject.GetComponent<Train>();
+                playerStates.Add(new PlayerState(trainComponent,
+                    match.MatchSettings.MaxLives, match.MatchSettings.DefaultPlayerSpeed));
                 _trains.Add(player.Name, trainComponent);
             }
+
+            var matchState = new MatchState(playerStates.ToArray());
+            match.Start(matchState);
         }
 
         public void Play(List<PlayerAction> actions)
