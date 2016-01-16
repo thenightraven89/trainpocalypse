@@ -1,11 +1,13 @@
 ﻿using Funk.Data;
+using Funk.Collision;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 namespace Funk
 {
-    public class Train : MonoBehaviour
+    public class Train : MonoBehaviour, ICollisionTirgger
     {
         public PlayerState TrainState { get; set;}
 
@@ -19,6 +21,8 @@ namespace Funk
         private float _tileSize = 1f;
         private Transform _transform;
         private Coroutine _moveCoroutine;
+
+        public event EventHandler<CollisionEventArgs> OnTrigger;
 
         private void Start()
         {
@@ -74,6 +78,19 @@ namespace Funk
                 case ActionType.MoveRight:
                     _direction = Vector3.right;
                     break;
+            }
+        }
+
+        public void SubscribeToCollision(EventHandler<CollisionEventArgs> action)
+        {
+            OnTrigger += action;
+        }
+
+        void OnTriggerEnter(Collider other)
+        {
+            if (OnTrigger != null)
+            {
+                OnTrigger.Invoke(this, new CollisionEventArgs(other));
             }
         }
     }

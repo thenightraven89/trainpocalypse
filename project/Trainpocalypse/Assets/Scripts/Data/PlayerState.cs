@@ -28,7 +28,6 @@ namespace Funk.Data
             _startingLives = startingLives;
             _defaultSpeed = defaultSpeed;
             _defaultDominoDelay = 0f;
-            _activePowerups = new List<PowerupBase>();
             Reset();
         }
 
