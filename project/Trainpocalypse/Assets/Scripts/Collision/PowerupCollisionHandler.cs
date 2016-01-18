@@ -18,13 +18,24 @@ namespace Funk.Collision
             }
         }
 
+        public event EventHandler<CollisionEventArgs> OnCollision;
+
         public void HandleCollision(ICollisionTirgger t, Collider other, MatchState state)
         {
             Train trainSender = (Train)t;
             if (t==null)
                 return;
+            if (OnCollision != null)
+            {
+                OnCollision.Invoke(t, new CollisionEventArgs(other));
+            }
             PowerupBase pw = other.GetComponent<PowerupBase>();
             pw.Apply(trainSender, state);
+        }
+
+        public void SubscribeToOnCollision(EventHandler<CollisionEventArgs> action)
+        {
+            OnCollision += action;
         }
     }
 }

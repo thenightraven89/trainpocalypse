@@ -10,13 +10,31 @@ namespace Funk.Data
         public float DominoDelay { get; set; }
         public bool IsInvulnerable { get; set; }
         public Train TrainController { get; set; }
-        public int Lives { get; set; }
+        public int Lives
+        {
+            get
+            {
+                return _currentLives;
+            }
+            set
+            {
+                if (value > _startingLives)
+                {
+                    _currentLives = _startingLives;
+                }
+                else
+                {
+                    _currentLives = value;
+                }
+            }
+        }
         public bool IsDead { get { return Lives <= 0f; } }
         public IEnumerable<PowerupBase> ActivePowerups
         {
             get { return _activePowerups; }
         }
 
+        private int _currentLives;
         private float _defaultSpeed;
         private float _defaultDominoDelay;
         private int _startingLives;
@@ -36,7 +54,7 @@ namespace Funk.Data
             _activePowerups = new List<PowerupBase>();
             Speed = _defaultSpeed;
             DominoDelay = _defaultDominoDelay;
-            Lives = _startingLives;
+            _currentLives = _startingLives;
             IsInvulnerable = false;
         }
 

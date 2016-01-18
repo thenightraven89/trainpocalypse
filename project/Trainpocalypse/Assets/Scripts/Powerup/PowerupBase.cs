@@ -7,15 +7,15 @@ namespace Funk.Powerup
     public class PowerupBase : MonoBehaviour
     {
         [SerializeField]
-        private float _duration;
+        protected float _duration;
         [SerializeField]
-        private GameObject _visuals;
+        protected GameObject _visuals;
         [SerializeField]
-        private Collider _collider;
+        protected Collider _collider;
 
-        private MatchState _matchContext;
-        private Train _powerupTarget;
-        private PlayerState _affectedPlayerState;
+        protected MatchState _matchContext;
+        protected Train _powerupTarget;
+        protected PlayerState _affectedPlayerState;
         private Coroutine _waitCoroutine;
 
         public void Apply(Train target, MatchState context)

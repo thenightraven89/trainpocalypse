@@ -1,5 +1,6 @@
 ﻿using Funk.Collision;
 using Funk.Data;
+using Funk.Powerup;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,6 +15,8 @@ namespace Funk
         private Dictionary<string, Train> _trains;
         private List<Transform> _spawnPoints;
         private CollisionController _collisionCenter;
+        private PowerupSpawner _powerupSpawner;
+        private PowerupController _powerupController;
 
         public MatchPlayback(Match match)
         {
@@ -48,6 +51,10 @@ namespace Funk
                 _trains.Add(player.Name, trainComponent);
             }
 
+            _powerupSpawner = new PowerupSpawner(match.MatchSettings.PowerupsAvailable);
+            _powerupController = new PowerupController(match, _powerupSpawner);
+            _collisionCenter.SubscribeToCollisionEvent("Powerup", 
+                _powerupController.PickUpEventHandler);
             var matchState = new MatchState(playerStates.ToArray());
             match.Start(matchState);
            
@@ -59,6 +66,12 @@ namespace Funk
             {
                 _trains[actions[i].PlayerName].Play(actions[i].Type);
             }
+        }
+
+        public void RunPowerUpSpawner(float deltaTime)
+        {
+
+            _powerupController.Run(deltaTime);
         }
     }
 }

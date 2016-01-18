@@ -22,6 +22,12 @@ namespace Funk.Collision
             }
         }
 
+        public void SubscribeToCollisionEvent(string collisionKey, 
+            EventHandler<CollisionEventArgs> action)
+        {
+            _collisionHandlers[collisionKey].SubscribeToOnCollision(action);
+        }
+
         public void HandleCollision(object sender, CollisionEventArgs args)
         {
             string tag = args.Other.tag;
@@ -47,7 +53,11 @@ namespace Funk.Collision
     {
         string Tag { get; }
 
+        event EventHandler<CollisionEventArgs> OnCollision;
+
         void HandleCollision(ICollisionTirgger t, Collider other, MatchState context);
+
+        void SubscribeToOnCollision(EventHandler<CollisionEventArgs> action);
     }
 
     public interface ICollisionTirgger

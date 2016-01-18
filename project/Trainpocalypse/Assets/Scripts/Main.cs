@@ -11,8 +11,6 @@ namespace Funk
         private Match _match;
         private MatchInput _input;
         private MatchPlayback _playback;
-        private PowerupSpawner _powerupSpawner;
-        private PowerupController _powerupController;
 
         private void Awake()
         {
@@ -40,23 +38,23 @@ namespace Funk
                     InputMap = InputMap.KeyboardArrows }
             };
 
-            var matchSettings = new MatchSettings(10, 5, 8,
-                new PowerupSettings[] { new PowerupSettings(typeof(PowerupBase), 3, 0f, 1f) }
+            var matchSettings = new MatchSettings(10, 4, 8,
+                new PowerupSettings[] { new PowerupSettings(typeof(ClockPowerup), 3, 0f, 1f),
+                new PowerupSettings(typeof(FreezePowerup), 1, 10f, 0.1f),
+                new PowerupSettings(typeof(InvulnerabilityPowerup), 1, 10, 0.4f),
+                new PowerupSettings(typeof(ExtraLifePowerup), 1, 30, 0.3f)}
                 );
 
             _match = new Match(mapData, playerData, matchSettings);
             _input = new MatchInput(_match);
             _playback = new MatchPlayback(_match);
-            _powerupSpawner = GetComponent<PowerupSpawner>();
-            _powerupSpawner.LoadPowerups(_match.MatchSettings.PowerupsAvailable);
-            _powerupController = new PowerupController(_match, _powerupSpawner);
         }
 
         private void Update()
         {
             var actions = _input.GetActions();
             _playback.Play(actions);
-            _powerupController.Run(Time.deltaTime);
+            _playback.RunPowerUpSpawner(Time.deltaTime);
         }
     }
 }

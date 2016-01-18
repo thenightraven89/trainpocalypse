@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Funk.Data;
+using Funk.Collision;
 
 namespace Funk.Powerup
 {
@@ -91,6 +92,7 @@ namespace Funk.Powerup
 
                 _spawnedCooldowns.Add(availablePowerups[k],
                     _matchSettings.GetPowerupSettings(availablePowerups[0]).Cooldown);
+                _totalSpawned++;
             }
         }
 
@@ -108,6 +110,16 @@ namespace Funk.Powerup
             if (_totalSpawned < _matchSettings.MaxSpawnedPowerups)
             {
                 SpawnRandom();
+            }
+        }
+
+        public void PickUpEventHandler(object sender, CollisionEventArgs args)
+        {
+            PowerupBase pw = args.Other.GetComponent<PowerupBase>();
+            Type powerupType = pw.GetType();
+            if (_spawnedInstances.ContainsKey(powerupType))
+            {
+                PickUp(powerupType);
             }
         }
 

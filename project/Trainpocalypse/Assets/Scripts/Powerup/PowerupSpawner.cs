@@ -5,9 +5,14 @@ using System;
 
 namespace Funk.Powerup
 {
-    public class PowerupSpawner : MonoBehaviour
+    public class PowerupSpawner
     {
         private Dictionary<Type, GameObject> _allPowerups;
+
+        public PowerupSpawner(IEnumerable<Type> powerupTypes)
+        {
+            LoadPowerups(powerupTypes);
+        }
 
         public void LoadPowerups(IEnumerable<Type> powerupTypes)
         {
@@ -42,7 +47,7 @@ namespace Funk.Powerup
         public void Spawn(int x, int y, Type powerupType)
         {
             Debug.Log("Spawned " + powerupType.ToString());
-            Instantiate(_allPowerups[powerupType], new Vector3(x, 0, y), Quaternion.identity);
+            GameObject.Instantiate(_allPowerups[powerupType], new Vector3(x, 0, y), Quaternion.identity);
         }
     }
 }
