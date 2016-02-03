@@ -18,7 +18,6 @@ namespace Funk.Powerup
         {
             _allPowerups = new Dictionary<Type, GameObject>();
             PowerupBase[] resourcesPowerups = Resources.LoadAll<PowerupBase>("Powerups");
-            Debug.Log(resourcesPowerups.Length);
             foreach (var p in resourcesPowerups)
             {
                 bool shouldAdd = false;
@@ -34,6 +33,10 @@ namespace Funk.Powerup
                 {
                     _allPowerups.Add(p.GetType(), p.gameObject);
                 }
+                else
+                {
+                    Resources.UnloadAsset(p);
+                }
             }
         }
 
@@ -46,8 +49,8 @@ namespace Funk.Powerup
 
         public void Spawn(int x, int y, Type powerupType)
         {
-            Debug.Log("Spawned " + powerupType.ToString());
-            GameObject.Instantiate(_allPowerups[powerupType], new Vector3(x, 0, y), Quaternion.identity);
+            GameObject.Instantiate(_allPowerups[powerupType], 
+                new Vector3(x, 0, y), Quaternion.identity);
         }
     }
 }
