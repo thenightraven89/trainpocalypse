@@ -12,6 +12,12 @@ namespace Funk.Collision
         private Match _match;
         private Dictionary<string, ICollisionHandler> _collisionHandlers;
 
+        public CollisionController(Match match)
+        {
+            _match = match;
+            _collisionHandlers = new Dictionary<string, ICollisionHandler>();
+        }
+
         public CollisionController(Match match, IEnumerable<ICollisionHandler> collisionHandlers)
         {
             _match = match;
@@ -22,10 +28,9 @@ namespace Funk.Collision
             }
         }
 
-        public void SubscribeToCollisionEvent(string collisionKey, 
-            EventHandler<CollisionEventArgs> action)
+        public void AddCollisionHandler(ICollisionHandler handler)
         {
-            _collisionHandlers[collisionKey].SubscribeToOnCollision(action);
+            _collisionHandlers.Add(handler.Tag, handler);
         }
 
         public void HandleCollision(object sender, CollisionEventArgs args)
@@ -53,11 +58,7 @@ namespace Funk.Collision
     {
         string Tag { get; }
 
-        event EventHandler<CollisionEventArgs> OnCollision;
-
         void HandleCollision(ICollisionTirgger t, Collider other, MatchState context);
-
-        void SubscribeToOnCollision(EventHandler<CollisionEventArgs> action);
     }
 
     public interface ICollisionTirgger

@@ -116,16 +116,6 @@ namespace Funk.Powerup
             }
         }
 
-        public void PickUpEventHandler(object sender, CollisionEventArgs args)
-        {
-            PowerupBase pw = args.Other.GetComponent<PowerupBase>();
-            Type powerupType = pw.GetType();
-            if (_spawnedInstances.ContainsKey(powerupType))
-            {
-                PickUp(powerupType);
-            }
-        }
-
         public void PickUp(Type powerupType)
         {
             _totalSpawned--;

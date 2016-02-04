@@ -9,7 +9,9 @@ namespace Funk
 {
     public class Train : MonoBehaviour, ICollisionTirgger
     {
-        public PlayerState TrainState { get; set;}
+        public PlayerState TrainState { get; set; }
+
+        public string TrainName { get; set; }
 
         [SerializeField]
         private GameObject _domino;
@@ -79,6 +81,20 @@ namespace Funk
                     _direction = Vector3.right;
                     break;
             }
+        }
+
+        public void Explode()
+        {
+            //Spawn a mock train model with some kind of death animation that will
+            //quickly fade.
+        }
+
+        public void Reset(Vector3 position, Quaternion rotation)
+        {
+            StopCoroutine(_moveCoroutine);
+            _transform.position = position;
+            _transform.rotation = rotation;
+            Start();
         }
 
         public void SubscribeToCollision(EventHandler<CollisionEventArgs> action)

@@ -18,24 +18,23 @@ namespace Funk.Collision
             }
         }
 
-        public event EventHandler<CollisionEventArgs> OnCollision;
+        private PowerupController _powerupController;
+
+        public PowerupCollisionHandler(PowerupController controller)
+        {
+            _powerupController = controller;
+        }
 
         public void HandleCollision(ICollisionTirgger t, Collider other, MatchState state)
         {
             Train trainSender = (Train)t;
             if (t==null)
                 return;
-            if (OnCollision != null)
-            {
-                OnCollision.Invoke(t, new CollisionEventArgs(other));
-            }
+
             PowerupBase pw = other.GetComponent<PowerupBase>();
             pw.Apply(new ApplyEffectContext(trainSender, state));
-        }
 
-        public void SubscribeToOnCollision(EventHandler<CollisionEventArgs> action)
-        {
-            OnCollision += action;
+            _powerupController.PickUp(pw.GetType());
         }
     }
 }

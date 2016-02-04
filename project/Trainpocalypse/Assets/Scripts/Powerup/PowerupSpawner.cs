@@ -8,15 +8,15 @@ namespace Funk.Powerup
     {
         private Dictionary<Type, GameObject> _allPowerups;
 
-        public PowerupSpawner(IEnumerable<Type> powerupTypes)
+        public PowerupSpawner(IEnumerable<Type> powerupTypes, string powerupPath)
         {
-            LoadPowerups(powerupTypes);
+            LoadPowerups(powerupTypes, powerupPath);
         }
 
-        public void LoadPowerups(IEnumerable<Type> powerupTypes)
+        public void LoadPowerups(IEnumerable<Type> powerupTypes, string path)
         {
             _allPowerups = new Dictionary<Type, GameObject>();
-            PowerupBase[] resourcesPowerups = Resources.LoadAll<PowerupBase>("Powerups");
+            PowerupBase[] resourcesPowerups = Resources.LoadAll<PowerupBase>(path);
             foreach (var p in resourcesPowerups)
             {
                 bool shouldAdd = false;
