@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using System;
 
@@ -33,11 +32,9 @@ namespace Funk.Powerup
                 {
                     _allPowerups.Add(p.GetType(), p.gameObject);
                 }
-                else
-                {
-                    Resources.UnloadAsset(p);
-                }
             }
+            resourcesPowerups = null;
+            Resources.UnloadUnusedAssets();
         }
 
         public bool CanSpawn(int x, int y)

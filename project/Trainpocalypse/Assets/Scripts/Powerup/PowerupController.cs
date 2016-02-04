@@ -14,8 +14,9 @@ namespace Funk.Powerup
         private PowerupSpawner _spawner;
         private Dictionary<Type, int> _spawnedInstances;
         private Dictionary<Type, float> _spawnedCooldowns;
-        private int _totalSpawned; 
+        private int _totalSpawned;
 
+        private const int MAX_SPAWN_TRIES = 5;
 
         public PowerupController(Match match, PowerupSpawner spawner)
         {
@@ -29,11 +30,11 @@ namespace Funk.Powerup
 
         public List<Type> GetAvailablePowerups()
         {
-            List<Type> powerupTypes = _matchSettings.PowerupsAvailable.ToList();
-            List<Type> powerupsOnCooldown = _spawnedCooldowns.Keys.ToList();
+            Type[] powerupTypes = _matchSettings.PowerupsAvailable.ToArray();
+            Type[] powerupsOnCooldown = _spawnedCooldowns.Keys.ToArray();
             List<Type> availablePowerups = new List<Type>();
 
-            for (int i = 0; i < powerupTypes.Count; i++)
+            for (int i = 0; i < powerupTypes.Length; i++)
             {
                 int instances = 0;
                 if (_spawnedInstances.ContainsKey(powerupTypes[i]))
@@ -54,11 +55,13 @@ namespace Funk.Powerup
             int x, y;
             int rezX = _mapData.Width / 2;
             int rezY = _mapData.Height / 2;
+            int tries = 0;
             do
             {
                 x = UnityEngine.Random.Range(-rezX, rezX);
                 y = UnityEngine.Random.Range(-rezY, rezY);
-            } while (!_spawner.CanSpawn(x, y));
+                tries++;
+            } while (!_spawner.CanSpawn(x, y) && tries < MAX_SPAWN_TRIES);
 
             List<Type> availablePowerups = GetAvailablePowerups();
 

@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
-using Funk.Data;
 
 namespace Funk.Powerup
 {
