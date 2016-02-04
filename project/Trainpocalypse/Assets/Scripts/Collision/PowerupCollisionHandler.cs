@@ -30,7 +30,7 @@ namespace Funk.Collision
                 OnCollision.Invoke(t, new CollisionEventArgs(other));
             }
             PowerupBase pw = other.GetComponent<PowerupBase>();
-            pw.Apply(trainSender, state);
+            pw.Apply(new ApplyEffectContext(trainSender, state));
         }
 
         public void SubscribeToOnCollision(EventHandler<CollisionEventArgs> action)

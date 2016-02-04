@@ -1,6 +1,5 @@
-﻿using Funk.Powerup;
+﻿using Funk.Player;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Funk.Data
 {
@@ -29,7 +28,7 @@ namespace Funk.Data
             }
         }
         public bool IsDead { get { return Lives <= 0f; } }
-        public IEnumerable<PowerupBase> ActivePowerups
+        public IEnumerable<IStateModifier> ActiveModifiers
         {
             get { return _activePowerups; }
         }
@@ -38,7 +37,7 @@ namespace Funk.Data
         private float _defaultSpeed;
         private float _defaultDominoDelay;
         private int _startingLives;
-        private List<PowerupBase> _activePowerups;
+        private List<IStateModifier> _activePowerups;
 
         public PlayerState(Train train, int startingLives, float defaultSpeed)
         {
@@ -51,19 +50,19 @@ namespace Funk.Data
 
         public void Reset()
         {
-            _activePowerups = new List<PowerupBase>();
+            _activePowerups = new List<IStateModifier>();
             Speed = _defaultSpeed;
             DominoDelay = _defaultDominoDelay;
             _currentLives = _startingLives;
             IsInvulnerable = false;
         }
 
-        public void AddActivePowerup(PowerupBase powerup)
+        public void AddModifier(IStateModifier powerup)
         {
             _activePowerups.Add(powerup);
         }
 
-        public void RemoveActivePowerup(PowerupBase powerup)
+        public void RemoveModifier(IStateModifier powerup)
         {
             _activePowerups.Remove(powerup);
         }
@@ -74,7 +73,7 @@ namespace Funk.Data
             {
                 _activePowerups[i].Unapply();
             }
-            _activePowerups = new List<PowerupBase>();
+            _activePowerups = new List<IStateModifier>();
         }
     }
 }

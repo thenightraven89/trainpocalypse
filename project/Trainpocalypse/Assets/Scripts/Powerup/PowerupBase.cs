@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Funk.Data;
+using Funk.Player;
 
 namespace Funk.Powerup
 {
-    public class PowerupBase : MonoBehaviour
+    public class PowerupBase : MonoBehaviour, IStateModifier
     {
         [SerializeField]
         protected float _duration;
@@ -18,19 +19,19 @@ namespace Funk.Powerup
         protected PlayerState _affectedPlayerState;
         private Coroutine _waitCoroutine;
 
-        public void Apply(Train target, MatchState context)
+        public void Apply(ApplyEffectContext context)
         {
-            _matchContext = context;
-            _powerupTarget = target;
-            for (int i = 0; i <= context.PlayersStates.Length; i++)
+            _matchContext = context.Context;
+            _powerupTarget = context.Target;
+            for (int i = 0; i <= _matchContext.PlayersStates.Length; i++)
             {
-                if (context.PlayersStates[i].TrainController == target)
+                if (_matchContext.PlayersStates[i].TrainController == _powerupTarget)
                 {
-                    _affectedPlayerState = context.PlayersStates[i];
+                    _affectedPlayerState = _matchContext.PlayersStates[i];
                     break;
                 }
             }
-            _affectedPlayerState.AddActivePowerup(this);
+            _affectedPlayerState.AddModifier(this);
             Hide();
             ApplyEffect();
             _waitCoroutine = StartCoroutine(WaitToUnapply());
@@ -62,7 +63,7 @@ namespace Funk.Powerup
             }
             else
             {
-                _affectedPlayerState.RemoveActivePowerup(this);
+                _affectedPlayerState.RemoveModifier(this);
             }
             UnapplyEffect();
             Destroy(gameObject);
@@ -70,6 +71,7 @@ namespace Funk.Powerup
 
         protected virtual void UnapplyEffect()
         {
+
         }
     }
 }
