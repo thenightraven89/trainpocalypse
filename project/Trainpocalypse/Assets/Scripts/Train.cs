@@ -53,8 +53,8 @@ namespace Funk
 
                 var newBlock = GameObject.Instantiate(
                     _domino,
-                    _transform.position,
-                    _transform.rotation) as GameObject;
+                    _domino.transform.position,
+                    _domino.transform.rotation) as GameObject;
 
                 newBlock.SetActive(true);
                 _dominoTrail.Add(newBlock);
@@ -102,7 +102,7 @@ namespace Funk
             OnTrigger += action;
         }
 
-        void OnTriggerEnter(Collider other)
+        private void OnTriggerEnter(Collider other)
         {
             if (OnTrigger != null)
             {
