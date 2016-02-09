@@ -23,14 +23,9 @@ namespace Funk.Powerup
         {
             _matchContext = context.Context;
             _powerupTarget = context.Target;
-            for (int i = 0; i <= _matchContext.PlayersStates.Length; i++)
-            {
-                if (_matchContext.PlayersStates[i].TrainController == _powerupTarget)
-                {
-                    _affectedPlayerState = _matchContext.PlayersStates[i];
-                    break;
-                }
-            }
+
+            _affectedPlayerState = _matchContext.GetPlayerState(_powerupTarget.TrainName);
+                   
             _affectedPlayerState.AddModifier(this);
             Hide();
             ApplyEffect();

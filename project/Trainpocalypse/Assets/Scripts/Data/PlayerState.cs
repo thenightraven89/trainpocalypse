@@ -1,14 +1,62 @@
 ﻿using Funk.Player;
 using System.Collections.Generic;
+using System;
+using System.Reflection;
 
 namespace Funk.Data
 {
-    public class PlayerState
+    public class PlayerState : IObservableModel
     {
-        public float Speed { get; set; }
-        public float DominoDelay { get; set; }
-        public bool IsInvulnerable { get; set; }
-        public Train TrainController { get; set; }
+        public float Speed
+        {
+            get
+            {
+                return _speed;
+            }
+            set
+            {
+                _speed = value;
+                if (ModelChanged != null)
+                {
+                    ModelChanged.Invoke(this,
+                        new ModelChangedEventArgs(this.GetType().GetProperty("Speed")));
+                }
+            }
+        }
+
+        public float DominoDelay
+        {
+            get
+            {
+                return _dominoDelay;
+            }
+            set
+            {
+                _dominoDelay = value;
+                if (ModelChanged != null)
+                {
+                    ModelChanged.Invoke(this,
+                        new ModelChangedEventArgs(this.GetType().GetProperty("DominoDelay")));
+                }
+            }
+        }
+        public bool IsInvulnerable
+        {
+            get
+            {
+                return _isInvulnerable;
+            }
+            set
+            {
+                _isInvulnerable = value;
+                if (ModelChanged != null)
+                {
+                    ModelChanged.Invoke(this,
+                        new ModelChangedEventArgs(this.GetType().GetProperty("IsInvulnerable")));
+                }
+            }
+        }
+
         public int Lives
         {
             get
@@ -27,6 +75,7 @@ namespace Funk.Data
                 }
             }
         }
+
         public bool IsDead { get { return Lives <= 0f; } }
         public IEnumerable<IStateModifier> ActiveModifiers
         {
@@ -34,14 +83,18 @@ namespace Funk.Data
         }
 
         private int _currentLives;
+        private float _speed;
+        private float _dominoDelay;
+        private bool _isInvulnerable;
         private float _defaultSpeed;
         private float _defaultDominoDelay;
         private int _startingLives;
         private List<IStateModifier> _activePowerups;
 
-        public PlayerState(Train train, int startingLives, float defaultSpeed)
+        public event EventHandler<ModelChangedEventArgs> ModelChanged;
+
+        public PlayerState(int startingLives, float defaultSpeed)
         {
-            TrainController = train;
             _startingLives = startingLives;
             _defaultSpeed = defaultSpeed;
             _defaultDominoDelay = 0f;
@@ -51,10 +104,10 @@ namespace Funk.Data
         public void Reset()
         {
             _activePowerups = new List<IStateModifier>();
-            Speed = _defaultSpeed;
-            DominoDelay = _defaultDominoDelay;
+            _speed = _defaultSpeed;
+            _dominoDelay = _defaultDominoDelay;
             _currentLives = _startingLives;
-            IsInvulnerable = false;
+            _isInvulnerable = false;
         }
 
         public void AddModifier(IStateModifier powerup)
@@ -74,6 +127,11 @@ namespace Funk.Data
                 _activePowerups[i].Unapply();
             }
             _activePowerups = new List<IStateModifier>();
+        }
+
+        public void SubscribeToModelChanged(EventHandler<ModelChangedEventArgs> action)
+        {
+            ModelChanged += action;
         }
     }
 }

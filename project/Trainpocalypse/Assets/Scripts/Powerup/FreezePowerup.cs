@@ -9,7 +9,7 @@ namespace Funk.Powerup
 
         protected override void ApplyEffect()
         {
-            PlayerState[] allPlayers = _matchContext.PlayersStates;
+            PlayerState[] allPlayers = _matchContext.PlayerStates;
             for (int i = 0; i < allPlayers.Length; i++)
             {
                 if (allPlayers[i] != _affectedPlayerState)
@@ -21,7 +21,7 @@ namespace Funk.Powerup
 
         protected override void UnapplyEffect()
         {
-            PlayerState[] allPlayers = _matchContext.PlayersStates;
+            PlayerState[] allPlayers = _matchContext.PlayerStates;
             for (int i = 0; i < allPlayers.Length; i++)
             {
                 if (allPlayers[i] != _affectedPlayerState)

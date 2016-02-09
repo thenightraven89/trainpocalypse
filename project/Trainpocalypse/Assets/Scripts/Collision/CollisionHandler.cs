@@ -9,18 +9,15 @@ namespace Funk.Collision
 {
     public class CollisionController
     {
-        private Match _match;
         private Dictionary<string, ICollisionHandler> _collisionHandlers;
 
-        public CollisionController(Match match)
+        public CollisionController()
         {
-            _match = match;
             _collisionHandlers = new Dictionary<string, ICollisionHandler>();
         }
 
         public CollisionController(Match match, IEnumerable<ICollisionHandler> collisionHandlers)
         {
-            _match = match;
             _collisionHandlers = new Dictionary<string, ICollisionHandler>();
             foreach (var handler in collisionHandlers)
             {
@@ -38,8 +35,7 @@ namespace Funk.Collision
             string tag = args.Other.tag;
             if (_collisionHandlers.ContainsKey(tag))
             {
-                _collisionHandlers[tag].HandleCollision((ICollisionTirgger)sender, args.Other,
-                    _match.MatchState);
+                _collisionHandlers[tag].HandleCollision((ICollisionTirgger)sender, args);
             }
         }
     }
@@ -48,9 +44,14 @@ namespace Funk.Collision
     {
         public Collider Other { get; private set; }
 
-        public CollisionEventArgs(Collider other)
+        public Train SenderTrain { get; private set; }
+
+        public MatchState MatchState { get; set; }
+
+        public CollisionEventArgs(Train sender, Collider other)
         {
             Other = other;
+            SenderTrain = sender;
         }
     }
 
@@ -58,7 +59,7 @@ namespace Funk.Collision
     {
         string Tag { get; }
 
-        void HandleCollision(ICollisionTirgger t, Collider other, MatchState context);
+        void HandleCollision(ICollisionTirgger t, CollisionEventArgs collisionArgs);
     }
 
     public interface ICollisionTirgger

@@ -25,15 +25,15 @@ namespace Funk.Collision
             _respawnMethod = respawnMethod;
         }
 
-        public void HandleCollision(ICollisionTirgger t, Collider other, MatchState state)
+        public void HandleCollision(ICollisionTirgger t, CollisionEventArgs collisionArgs)
         {
             Train trainSender = (Train)t;
             if (t == null)
                 return;
+            PlayerState trainState = collisionArgs.MatchState.GetPlayerState(trainSender.TrainName);
+            trainState.Lives--;
 
-            trainSender.TrainState.Lives--;
-
-            if (trainSender.TrainState.IsDead)
+            if (trainState.IsDead)
             {
                 GameObject.Destroy(trainSender.gameObject);
             }

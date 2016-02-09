@@ -7,20 +7,19 @@ namespace Funk.Data
 {
     public class MatchState
     {
-        public PlayerState[] PlayersStates { get; private set; }
         public int PlayersAlive
         {
             get
             {
-                int plAlive = 0;
-                for (int i = 0; i < PlayersStates.Length; i++)
+                int playersAlive = 0;
+                foreach (var key in _playersStates.Keys)
                 {
-                    if (!PlayersStates[i].IsDead)
+                    if (_playersStates[key].IsDead)
                     {
-                        plAlive++;
+                        playersAlive++;
                     }
                 }
-                return plAlive;
+                return playersAlive;
             }
         }
 
@@ -29,10 +28,20 @@ namespace Funk.Data
             get { return PlayersAlive > 1; }
         }
 
-        public MatchState(PlayerState[] playerStates)
+        public PlayerState[] PlayerStates { get { return _playersStates.Values.ToArray(); } }
+
+        private Dictionary<string, PlayerState> _playersStates;
+
+        public MatchState(Dictionary<string, PlayerState> playerStates)
         {
-            PlayersStates = playerStates;
+            _playersStates = playerStates;
         }
 
+        public PlayerState GetPlayerState(string player)
+        {
+            if (_playersStates.ContainsKey(player))
+                return _playersStates[player];
+            return null;
+        }
     }
 }

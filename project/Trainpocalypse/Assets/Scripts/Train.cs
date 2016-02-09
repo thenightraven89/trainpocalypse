@@ -9,9 +9,8 @@ namespace Funk
 {
     public class Train : MonoBehaviour, ICollisionTirgger
     {
-        public PlayerState TrainState { get; set; }
-
         public string TrainName { get; set; }
+        public float Speed { get; set; }
 
         [SerializeField]
         private GameObject _domino;
@@ -44,7 +43,7 @@ namespace Funk
 
                 while (_from != _to)
                 {
-                    _from = Vector3.MoveTowards(_from, _to, TrainState.Speed * Time.deltaTime);
+                    _from = Vector3.MoveTowards(_from, _to, Speed * Time.deltaTime);
                     _transform.position = _from;
                     yield return null;
                 }
@@ -102,11 +101,19 @@ namespace Funk
             OnTrigger += action;
         }
 
+        public void SetSpeed(object sender, ModelChangedEventArgs args)
+        {
+            PlayerState newState = (PlayerState)sender;
+            if (newState == null)
+                return;
+            Speed = newState.Speed;
+        }
+
         private void OnTriggerEnter(Collider other)
         {
             if (OnTrigger != null)
             {
-                OnTrigger.Invoke(this, new CollisionEventArgs(other));
+                OnTrigger.Invoke(this, new CollisionEventArgs(this, other));
             }
         }
     }

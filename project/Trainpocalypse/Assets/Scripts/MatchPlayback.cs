@@ -16,19 +16,20 @@ namespace Funk
         private Dictionary<string, Train> _trains;
         private Dictionary<string, Transform> _spawnPoints;
         private CollisionController _collisionCenter;
-        private PowerupSpawner _powerupSpawner;
         private PowerupController _powerupController;
+
+        private MatchState _matchState;
 
         public MatchPlayback(Match match)
         {
             _spawnPoints = new Dictionary<string, Transform>();
             _trains = new Dictionary<string, Train>();
-            _collisionCenter = new CollisionController(match);
+            _collisionCenter = new CollisionController();
 
             var mapPath = string.Format("{0}{1}", PATH_MAPS, match.MapData.Name);
             var mapSource = Resources.Load(mapPath) as GameObject;
             var mapObject = GameObject.Instantiate(mapSource);
-            var playerStates = new List<PlayerState>();
+            var playerStates = new Dictionary<string, PlayerState>();
 
             foreach (var player in match.PlayerData)
             {
@@ -44,25 +45,27 @@ namespace Funk
                     ) as GameObject;
 
                 var trainComponent = trainObject.GetComponent<Train>();
-                var trainState = new PlayerState(trainComponent,
-                    match.MatchSettings.MaxLives, match.MatchSettings.DefaultPlayerSpeed);
-                trainComponent.TrainState = trainState;
-                trainComponent.SubscribeToCollision(_collisionCenter.HandleCollision);
+                var trainState = new PlayerState(match.MatchSettings.MaxLives, 
+                    match.MatchSettings.DefaultPlayerSpeed);
+                //trainComponent.TrainState = trainState;
+                trainComponent.SubscribeToCollision(HandleCollision);
                 trainComponent.TrainName = player.Name;
-                playerStates.Add(trainState);
+                trainComponent.Speed = trainState.Speed;
+                trainState.SubscribeToModelChanged(trainComponent.SetSpeed);
+                playerStates.Add(player.Name, trainState);
                 _trains.Add(player.Name, trainComponent);
             }
 
-            _powerupSpawner = new PowerupSpawner(match.MatchSettings.PowerupsAvailable,
+            PowerupSpawner powerupSpawner = 
+                new PowerupSpawner(match.MatchSettings.PowerupsAvailable,
                 PATH_POWERUPS);
-            _powerupController = new PowerupController(match, _powerupSpawner);
-            var matchState = new MatchState(playerStates.ToArray());
+            _powerupController = new PowerupController(match, powerupSpawner);
+            _matchState = new MatchState(playerStates);
 
             _collisionCenter.AddCollisionHandler(new PowerupCollisionHandler(_powerupController));
             _collisionCenter.AddCollisionHandler(new ObstacleCollisionHandler(Respawn));
 
-            match.Start(matchState);
-           
+            match.Start(_matchState);
         }
 
         public void Respawn(Train train)
@@ -84,6 +87,12 @@ namespace Funk
         public void RunPowerUpSpawner(float deltaTime)
         {
             _powerupController.Run(deltaTime);
+        }
+
+        private void HandleCollision(object sender, CollisionEventArgs args)
+        {
+            args.MatchState = _matchState;
+            _collisionCenter.HandleCollision(sender, args);
         }
     }
 }

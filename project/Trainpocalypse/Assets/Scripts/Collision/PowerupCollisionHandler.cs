@@ -25,14 +25,15 @@ namespace Funk.Collision
             _powerupController = controller;
         }
 
-        public void HandleCollision(ICollisionTirgger t, Collider other, MatchState state)
+        public void HandleCollision(ICollisionTirgger t, CollisionEventArgs collisionArgs)
         {
             Train trainSender = (Train)t;
             if (t==null)
                 return;
 
-            PowerupBase pw = other.GetComponent<PowerupBase>();
-            pw.Apply(new ApplyEffectContext(trainSender, state));
+            PowerupBase pw = collisionArgs.Other.GetComponent<PowerupBase>();
+
+            pw.Apply(new ApplyEffectContext(trainSender, collisionArgs.MatchState));
 
             _powerupController.PickUp(pw.GetType());
         }
