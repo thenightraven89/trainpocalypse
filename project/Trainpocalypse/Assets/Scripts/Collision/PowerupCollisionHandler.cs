@@ -1,10 +1,5 @@
 ﻿using Funk.Data;
 using Funk.Powerup;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
 
 namespace Funk.Collision
 {
@@ -18,11 +13,11 @@ namespace Funk.Collision
             }
         }
 
-        private PowerupController _powerupController;
+        private PowerupHandler _powerupHandler;
 
-        public PowerupCollisionHandler(PowerupController controller)
+        public PowerupCollisionHandler(PowerupHandler powerupHandler)
         {
-            _powerupController = controller;
+            _powerupHandler = powerupHandler;
         }
 
         public void HandleCollision(ICollisionTirgger t, CollisionEventArgs collisionArgs)
@@ -35,7 +30,7 @@ namespace Funk.Collision
 
             pw.Apply(new ApplyEffectContext(trainSender, collisionArgs.MatchState));
 
-            _powerupController.PickUp(pw.GetType());
+            _powerupHandler.PickUp(pw.GetType());
         }
     }
 }

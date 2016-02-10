@@ -29,7 +29,7 @@ namespace Funk.Player
 
         private PlayerAction _previousAction;
 
-        public LocalPlayer(PlayerData playerData)
+        public LocalPlayer(PlayerSettings playerData)
         {
             _name = playerData.Name;
             _inputSuffix = ((byte)playerData.InputMap).ToString();

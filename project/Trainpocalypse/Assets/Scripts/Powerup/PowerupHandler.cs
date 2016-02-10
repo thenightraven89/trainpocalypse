@@ -2,30 +2,30 @@
 using System.Collections.Generic;
 using System.Linq;
 using Funk.Data;
-using Funk.Collision;
+using UnityEngine;
 
 namespace Funk.Powerup
 {
-    class PowerupController
+    public class PowerupHandler
     {
-        private Match _match;
         private MatchSettings _matchSettings;
-        private MapData _mapData;
-        private PowerupSpawner _spawner;
+        private MapSettings _mapSettings;
+
+        private Dictionary<Type, GameObject> _allPowerups;
         private Dictionary<Type, int> _spawnedInstances;
         private Dictionary<Type, float> _spawnedCooldowns;
         private int _totalSpawned;
 
         private const int MAX_SPAWN_TRIES = 5;
 
-        public PowerupController(Match match, PowerupSpawner spawner)
+        public PowerupHandler(Match match, string powerupPath)
         {
-            _match = match;
-            _matchSettings = _match.MatchSettings;
-            _mapData = _match.MapData;
-            _spawner = spawner;
+            _matchSettings = match.MatchSettings;
+            _mapSettings = match.MapSettings;
             _spawnedInstances = new Dictionary<Type, int>();
             _spawnedCooldowns = new Dictionary<Type, float>();
+
+            LoadPowerups(match.MatchSettings.PowerupsAvailable, powerupPath);
         }
 
         public List<Type> GetAvailablePowerups()
@@ -53,15 +53,15 @@ namespace Funk.Powerup
         public void SpawnRandom()
         {
             int x, y;
-            int rezX = _mapData.Width / 2;
-            int rezY = _mapData.Height / 2;
+            int rezX = _mapSettings.Width / 2;
+            int rezY = _mapSettings.Height / 2;
             int tries = 0;
             do
             {
                 x = UnityEngine.Random.Range(-rezX, rezX);
                 y = UnityEngine.Random.Range(-rezY, rezY);
                 tries++;
-            } while (!_spawner.CanSpawn(x, y) && tries < MAX_SPAWN_TRIES);
+            } while (!CanSpawn(x, y) && tries < MAX_SPAWN_TRIES);
 
             List<Type> availablePowerups = GetAvailablePowerups();
 
@@ -82,7 +82,7 @@ namespace Funk.Powerup
                     pSum += _matchSettings.GetPowerupSettings(availablePowerups[k]).Chance;
                 }
 
-                _spawner.Spawn(x, y, availablePowerups[k]);
+                Spawn(x, y, availablePowerups[k]);
 
                 if (_spawnedInstances.ContainsKey(availablePowerups[k]))
                 {
@@ -99,7 +99,7 @@ namespace Funk.Powerup
             }
         }
 
-        public void Run(float deltaTime)
+        public void Update(float deltaTime)
         {
             var keys = new List<Type>(_spawnedCooldowns.Keys);
             foreach (var key in keys)
@@ -124,6 +124,43 @@ namespace Funk.Powerup
             {
                 _spawnedInstances.Remove(powerupType);
             }
+        }
+
+        private void LoadPowerups(IEnumerable<Type> powerupTypes, string path)
+        {
+            _allPowerups = new Dictionary<Type, GameObject>();
+            PowerupBase[] resourcesPowerups = Resources.LoadAll<PowerupBase>(path);
+            foreach (var p in resourcesPowerups)
+            {
+                bool shouldAdd = false;
+                foreach (var pt in powerupTypes)
+                {
+                    if (p.GetType() == pt)
+                    {
+                        shouldAdd = true;
+                        break;
+                    }
+                }
+                if (shouldAdd)
+                {
+                    _allPowerups.Add(p.GetType(), p.gameObject);
+                }
+            }
+            resourcesPowerups = null;
+            Resources.UnloadUnusedAssets();
+        }
+
+        private bool CanSpawn(int x, int y)
+        {
+            RaycastHit hit;
+            bool bHit = Physics.SphereCast(new Vector3(x, 1, y), 0.5f, -Vector3.up, out hit, 1f);
+            return !bHit;
+        }
+
+        private void Spawn(int x, int y, Type powerupType)
+        {
+            GameObject.Instantiate(_allPowerups[powerupType],
+                new Vector3(x, 0, y), Quaternion.identity);
         }
     }
 }

@@ -2,15 +2,18 @@
 {
     public class Match
     {
-        public MapData MapData { get; private set; }
-        public PlayerData[] PlayerData { get; private set; }
+        public MapSettings MapSettings { get; private set; }
+        public PlayerSettings[] PlayerSettings { get; private set; }
         public MatchSettings MatchSettings { get; private set; }
         public MatchState MatchState { get; private set; }
 
-        public Match(MapData mapData, PlayerData[] playerData, MatchSettings matchSettings)
+        public Match(
+            MapSettings mapData,
+            PlayerSettings[] playerSettings,
+            MatchSettings matchSettings)
         {
-            MapData = mapData;
-            PlayerData = playerData;
+            MapSettings = mapData;
+            PlayerSettings = playerSettings;
             MatchSettings = matchSettings;
         }
 
@@ -20,7 +23,7 @@
         }
     }
 
-    public struct PlayerData
+    public struct PlayerSettings
     {
         public byte Index;
         public string Name;
@@ -29,7 +32,7 @@
         public InputMap InputMap;
     }
 
-    public struct MapData
+    public struct MapSettings
     {
         public string Name;
         public int Width;

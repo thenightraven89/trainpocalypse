@@ -16,7 +16,7 @@ namespace Funk
         private Dictionary<string, Train> _trains;
         private Dictionary<string, Transform> _spawnPoints;
         private CollisionController _collisionCenter;
-        private PowerupController _powerupController;
+        private PowerupHandler _powerupHandler;
 
         private MatchState _matchState;
 
@@ -26,12 +26,12 @@ namespace Funk
             _trains = new Dictionary<string, Train>();
             _collisionCenter = new CollisionController();
 
-            var mapPath = string.Format("{0}{1}", PATH_MAPS, match.MapData.Name);
+            var mapPath = string.Format("{0}{1}", PATH_MAPS, match.MapSettings.Name);
             var mapSource = Resources.Load(mapPath) as GameObject;
             var mapObject = GameObject.Instantiate(mapSource);
             var playerStates = new Dictionary<string, PlayerState>();
 
-            foreach (var player in match.PlayerData)
+            foreach (var player in match.PlayerSettings)
             {
                 _spawnPoints.Add(player.Name,
                     mapObject.transform.Find("Spawn" + player.Index.ToString()));
@@ -55,14 +55,11 @@ namespace Funk
                 playerStates.Add(player.Name, trainState);
                 _trains.Add(player.Name, trainComponent);
             }
-
-            PowerupSpawner powerupSpawner = 
-                new PowerupSpawner(match.MatchSettings.PowerupsAvailable,
-                PATH_POWERUPS);
-            _powerupController = new PowerupController(match, powerupSpawner);
+            
+            _powerupHandler = new PowerupHandler(match, PATH_POWERUPS);
             _matchState = new MatchState(playerStates);
 
-            _collisionCenter.AddCollisionHandler(new PowerupCollisionHandler(_powerupController));
+            _collisionCenter.AddCollisionHandler(new PowerupCollisionHandler(_powerupHandler));
             _collisionCenter.AddCollisionHandler(new ObstacleCollisionHandler(Respawn));
 
             match.Start(_matchState);
@@ -86,7 +83,7 @@ namespace Funk
 
         public void RunPowerUpSpawner(float deltaTime)
         {
-            _powerupController.Run(deltaTime);
+            _powerupHandler.Update(deltaTime);
         }
 
         private void HandleCollision(object sender, CollisionEventArgs args)

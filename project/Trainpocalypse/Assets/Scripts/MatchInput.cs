@@ -14,7 +14,7 @@ namespace Funk
             _players = new List<IPlayer>();
             _actions = new List<PlayerAction>();
             
-            foreach (var player in match.PlayerData)
+            foreach (var player in match.PlayerSettings)
             {
                 _players.Add(new LocalPlayer(player));
             }

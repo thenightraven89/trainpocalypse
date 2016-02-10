@@ -14,23 +14,23 @@ namespace Funk
 
         private void Awake()
         {
-            var mapData = new MapData
+            var mapSettings = new MapSettings
             {
                 Name = "DefaultMap",
                 Width = 40,
                 Height = 40
             };
 
-            var playerData = new PlayerData[2]
+            var playerSettings = new PlayerSettings[2]
             {
-                new PlayerData() {
+                new PlayerSettings() {
                     Index = 0,
                     Name = "Player1",
                     Train = "RedTrain",
                     Block = "RedBlock",
                     InputMap = InputMap.KeyboardWASD },
 
-                new PlayerData() {
+                new PlayerSettings() {
                     Index = 1,
                     Name = "Player2",
                     Train = "BlueTrain",
@@ -38,14 +38,13 @@ namespace Funk
                     InputMap = InputMap.KeyboardArrows }
             };
 
-            var matchSettings = new MatchSettings(10, 4, 8,
-                new PowerupSettings[] { new PowerupSettings(typeof(ClockPowerup), 3, 0f, 1f),
+            var matchSettings = new MatchSettings(10, 4, 8, new PowerupSettings[] {
+                new PowerupSettings(typeof(ClockPowerup), 3, 0f, 1f),
                 new PowerupSettings(typeof(FreezePowerup), 1, 10f, 0.1f),
                 new PowerupSettings(typeof(InvulnerabilityPowerup), 1, 10, 0.4f),
-                new PowerupSettings(typeof(ExtraLifePowerup), 1, 30, 0.3f)}
-                );
+                new PowerupSettings(typeof(ExtraLifePowerup), 1, 30, 0.3f)});
 
-            _match = new Match(mapData, playerData, matchSettings);
+            _match = new Match(mapSettings, playerSettings, matchSettings);
             _input = new MatchInput(_match);
             _playback = new MatchPlayback(_match);
         }
