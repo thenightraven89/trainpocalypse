@@ -101,14 +101,6 @@ namespace Funk
             OnTrigger += action;
         }
 
-        public void SetSpeed(object sender, ModelChangedEventArgs args)
-        {
-            PlayerState newState = (PlayerState)sender;
-            if (newState == null)
-                return;
-            Speed = newState.Speed;
-        }
-
         private void OnTriggerEnter(Collider other)
         {
             if (OnTrigger != null)

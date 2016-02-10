@@ -45,13 +45,13 @@ namespace Funk
                     ) as GameObject;
 
                 var trainComponent = trainObject.GetComponent<Train>();
-                var trainState = new PlayerState(match.MatchSettings.MaxLives, 
+                var trainState = new PlayerState(player.Name, match.MatchSettings.MaxLives, 
                     match.MatchSettings.DefaultPlayerSpeed);
                 //trainComponent.TrainState = trainState;
-                trainComponent.SubscribeToCollision(HandleCollision);
+                trainComponent.SubscribeToCollision(HandleCollisionCallback);
                 trainComponent.TrainName = player.Name;
                 trainComponent.Speed = trainState.Speed;
-                trainState.SubscribeToModelChanged(trainComponent.SetSpeed);
+                trainState.SubscribeToModelChanged(PlayerStateChangedCallback);
                 playerStates.Add(player.Name, trainState);
                 _trains.Add(player.Name, trainComponent);
             }
@@ -86,10 +86,19 @@ namespace Funk
             _powerupHandler.Update(deltaTime);
         }
 
-        private void HandleCollision(object sender, CollisionEventArgs args)
+        private void HandleCollisionCallback(object sender, CollisionEventArgs args)
         {
             args.MatchState = _matchState;
             _collisionCenter.HandleCollision(sender, args);
+        }
+
+        private void PlayerStateChangedCallback(object sender, ModelChangedEventArgs args)
+        {
+            PlayerState newState = (PlayerState)sender;
+            if (newState == null)
+                return;
+            Train trainSender = _trains[newState.TrainName];
+            trainSender.Speed = newState.Speed;
         }
     }
 }

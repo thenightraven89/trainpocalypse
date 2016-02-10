@@ -77,6 +77,9 @@ namespace Funk.Data
         }
 
         public bool IsDead { get { return Lives <= 0f; } }
+
+        public string TrainName { get; private set; }
+
         public IEnumerable<IStateModifier> ActiveModifiers
         {
             get { return _activePowerups; }
@@ -93,11 +96,12 @@ namespace Funk.Data
 
         public event EventHandler<ModelChangedEventArgs> ModelChanged;
 
-        public PlayerState(int startingLives, float defaultSpeed)
+        public PlayerState(string name, int startingLives, float defaultSpeed)
         {
             _startingLives = startingLives;
             _defaultSpeed = defaultSpeed;
             _defaultDominoDelay = 0f;
+            TrainName = name;
             Reset();
         }
 
