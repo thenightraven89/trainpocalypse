@@ -1,0 +1,93 @@
+Initialize engine version: 5.3.3p3 (1d2e01741d9f)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: NVIDIA GeForce GTX 970 (ID=0x13c2)
+    Vendor:   NVIDIA
+    VRAM:     3072 MB
+Begin MonoManager ReloadAssembly
+Platform assembly: C:\Users\Raul\Projects\trainpocalypse\project\LobbyDemo\test_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\Raul\Projects\trainpocalypse\project\LobbyDemo\test_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\Raul\Projects\trainpocalypse\project\LobbyDemo\test_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
+Loading C:\Users\Raul\Projects\trainpocalypse\project\LobbyDemo\test_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
+Platform assembly: C:\Users\Raul\Projects\trainpocalypse\project\LobbyDemo\test_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\Raul\Projects\trainpocalypse\project\LobbyDemo\test_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\Raul\Projects\trainpocalypse\project\LobbyDemo\test_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading C:\Users\Raul\Projects\trainpocalypse\project\LobbyDemo\test_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: C:\Users\Raul\Projects\trainpocalypse\project\LobbyDemo\test_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading C:\Users\Raul\Projects\trainpocalypse\project\LobbyDemo\test_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+Platform assembly: C:\Users\Raul\Projects\trainpocalypse\project\LobbyDemo\test_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading C:\Users\Raul\Projects\trainpocalypse\project\LobbyDemo\test_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+Platform assembly: C:\Users\Raul\Projects\trainpocalypse\project\LobbyDemo\test_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading C:\Users\Raul\Projects\trainpocalypse\project\LobbyDemo\test_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+- Completed reload, in  0.124 seconds
+Platform assembly: C:\Users\Raul\Projects\trainpocalypse\project\LobbyDemo\test_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: C:\Users\Raul\Projects\trainpocalypse\project\LobbyDemo\test_Data\Managed\System.dll (this message is harmless)
+desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
+<RI> Initializing input.
+<RI> Input initialized.
+<RI> Initialized touch support.
+UnloadTime: 0.560803 ms
+Setting up 1 worker threads for Enlighten.
+  Thread -> id: 2520 -> priority: 1 
+MatchMakingClient ListMatches :https://mm.unet.unity3d.com/json/reply/ListMatchRequest
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
+
+JSON Response: [[UnityEngine.Networking.Match.ListMatchResponse]-success:True-extendedInfo:]-matches.Count:1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
+
+MatchMakingClient Join :https://mm.unet.unity3d.com/json/reply/JoinMatchRequest
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
+
+JSON Response: [[UnityEngine.Networking.Match.JoinMatchResponse]-success:True-extendedInfo:]-address:52.58.14.64,port:9999,networkId:0x001000000000138D,nodeId:0x1FAA,usingRelay:True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
+
+Network configuration mismatch detected. The number of networked scripts on the client does not match the number of networked scripts on the server. This could be caused by lazy loading of scripts on the client. This warning can be disabled by the checkbox in NetworkManager Script CRC Check.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
+
+CRC Local Dump LobbyPlayer : 0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
+
+CRC Local Dump Train : 0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
+
+CRC Remote Dump NetworkSpaceship : 0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
+
+CRC Remote Dump Train : 0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
+
+CRC Remote Dump LobbyPlayer : 0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
+
+DontDestroyOnLoad only work for root GameObjects or components on root GameObjects.
+ 
+(Filename:  Line: 374)
+
+DontDestroyOnLoad only work for root GameObjects or components on root GameObjects.
+ 
+(Filename:  Line: 374)
+
+Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 1.230758 ms
+
+Unloading 5 unused Assets to reduce memory usage. Loaded Objects now: 920.
+Total: 0.919307 ms (FindLiveObjects: 0.046413 ms CreateObjectMapping: 0.023046 ms MarkObjects: 0.840884 ms  DeleteObjects: 0.008322 ms)
+
+Log: connection {1} has been disconnected by timeout; address {::ffff:52.58.14.64:9999}
+Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.755099 ms
+
+Unloading 32 unused Assets to reduce memory usage. Loaded Objects now: 981.
+Total: 0.846326 ms (FindLiveObjects: 0.025607 ms CreateObjectMapping: 0.023046 ms MarkObjects: 0.754779 ms  DeleteObjects: 0.042252 ms)
+

@@ -21,21 +21,22 @@ namespace Funk
                 Height = 40
             };
 
-            var playerSettings = new PlayerSettings[2]
+            var playerSettings = new PlayerSettings[]
             {
                 new PlayerSettings() {
                     Index = 0,
                     Name = "Player1",
                     Train = "RedTrain",
                     Block = "RedBlock",
-                    InputMap = InputMap.KeyboardWASD },
+                    InputMap = InputMap.KeyboardWASD }
+                //,
 
-                new PlayerSettings() {
-                    Index = 1,
-                    Name = "Player2",
-                    Train = "BlueTrain",
-                    Block = "BlueBlock",
-                    InputMap = InputMap.KeyboardArrows }
+                //new PlayerSettings() {
+                //    Index = 1,
+                //    Name = "Player2",
+                //    Train = "BlueTrain",
+                //    Block = "BlueBlock",
+                //    InputMap = InputMap.KeyboardArrows }
             };
 
             var matchSettings = new MatchSettings(10, 4, 8, new PowerupSettings[] {
@@ -46,13 +47,14 @@ namespace Funk
 
             _match = new Match(mapSettings, playerSettings, matchSettings);
             _input = new MatchInput(_match);
-            _playback = new MatchPlayback(_match);
+            _playback = FindObjectOfType<MatchPlayback>();
+            _playback.SetMatch(_match);
         }
 
         private void Update()
         {
             var actions = _input.GetActions();
-            _playback.Play(actions);
+            _playback.PlayAction(actions);
             _playback.RunPowerUpSpawner(Time.deltaTime);
         }
     }

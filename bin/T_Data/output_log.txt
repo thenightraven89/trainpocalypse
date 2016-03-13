@@ -14,13 +14,65 @@ Platform assembly: C:\Users\Raul\Projects\trainpocalypse\bin\T_Data\Managed\Unit
 Loading C:\Users\Raul\Projects\trainpocalypse\bin\T_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
 Platform assembly: C:\Users\Raul\Projects\trainpocalypse\bin\T_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
 Loading C:\Users\Raul\Projects\trainpocalypse\bin\T_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
-- Completed reload, in  0.051 seconds
+- Completed reload, in  0.042 seconds
 Platform assembly: C:\Users\Raul\Projects\trainpocalypse\bin\T_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: C:\Users\Raul\Projects\trainpocalypse\bin\T_Data\Managed\System.dll (this message is harmless)
 desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
 <RI> Initializing input.
 <RI> Input initialized.
 <RI> Initialized touch support.
-UnloadTime: 1.779075 ms
+UnloadTime: 0.577128 ms
+MatchMakingClient ListMatches :https://mm.unet.unity3d.com/json/reply/ListMatchRequest
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
+
 Setting up 1 worker threads for Enlighten.
-  Thread -> id: e4c -> priority: 1 
+  Thread -> id: 2434 -> priority: 1 
+JSON Response: [[UnityEngine.Networking.Match.ListMatchResponse]-success:True-extendedInfo:]-matches.Count:0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
+
+creating match
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
+
+MatchMakingClient Create :https://mm.unet.unity3d.com/json/reply/CreateMatchRequest
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
+
+JSON Response: [[UnityEngine.Networking.Match.CreateMatchResponse]-success:True-extendedInfo:]-address:52.58.14.64,port:9999,networkId:0x0010000000001143,nodeId:0x1B78,usingRelay:True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
+
+NetworkLobbyManager no LobbyPlayer prefab is registered. Please add a LobbyPlayer prefab.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
+
+NetworkLobbyManager no GamePlayer prefab is registered. Please add a GamePlayer prefab.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
+
+.|.
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 37)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Funk.MatchPlayback.OnServerAddPlayer (UnityEngine.Networking.NetworkConnection conn, Int16 playerControllerId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.OnServerAddPlayerMessageInternal (UnityEngine.Networking.NetworkMessage netMsg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.InvokeHandler (Int16 msgType, UnityEngine.Networking.NetworkReader reader, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkServer.InvokeHandlerOnServer (UnityEngine.Networking.ULocalConnectionToServer conn, Int16 msgType, UnityEngine.Networking.MessageBase msg, Int32 channelId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.ULocalConnectionToServer.Send (Int16 msgType, UnityEngine.Networking.MessageBase msg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.ClientScene.AddPlayer (UnityEngine.Networking.NetworkConnection readyConn, Int16 playerControllerId, UnityEngine.Networking.MessageBase extraMessage) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.ClientScene.AddPlayer (UnityEngine.Networking.NetworkConnection readyConn, Int16 playerControllerId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.ClientScene.AddPlayer (Int16 playerControllerId) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.OnClientConnect (UnityEngine.Networking.NetworkConnection conn) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkLobbyManager.OnClientConnect (UnityEngine.Networking.NetworkConnection conn) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkManager.OnClientConnectInternal (UnityEngine.Networking.NetworkMessage netMsg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkConnection.InvokeHandler (UnityEngine.Networking.NetworkMessage netMsg) [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.LocalClient.ProcessInternalMessages () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.LocalClient.Update () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkClient.UpdateClients () [0x00000] in <filename unknown>:0 
+  at UnityEngine.Networking.NetworkIdentity.UNetStaticUpdate () [0x00000] in <filename unknown>:0 
+ 
+(Filename:  Line: -1)
+

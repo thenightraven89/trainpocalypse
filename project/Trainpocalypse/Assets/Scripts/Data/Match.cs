@@ -25,7 +25,7 @@
 
     public struct PlayerSettings
     {
-        public byte Index;
+        public short Index;
         public string Name;
         public string Train;
         public string Block;

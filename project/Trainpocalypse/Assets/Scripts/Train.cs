@@ -4,10 +4,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.Networking;
 
 namespace Funk
 {
-    public class Train : MonoBehaviour, ICollisionTirgger
+    public class Train : NetworkBehaviour, ICollisionTirgger
     {
         public string TrainName { get; set; }
         public float Speed { get; set; }
@@ -62,6 +63,10 @@ namespace Funk
 
         public void Play(ActionType action)
         {
+            if (!isLocalPlayer)
+            {
+                return;
+            }
             switch (action)
             {
                 case ActionType.MoveUp:
