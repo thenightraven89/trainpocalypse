@@ -35,24 +35,21 @@ namespace Funk
             ClientScene.RegisterPrefab(_domino);
 
             if (isServer)
+            {
                 _moveCoroutine = StartCoroutine(Move());
+            }
         }
         
         private IEnumerator Move()
         {
-            Debug.Log("started moving");
-
             while (true)
             {
                 _from = _transform.position;
                 _to = _from + _direction * _tileSize;
                 _transform.rotation = Quaternion.LookRotation(_direction, Vector3.up);
-
-                //Debug.Log(_direction + " is the direction");
-
+                
                 while (_from != _to)
                 {
-                    //Debug.Log(_transform.position);
                     _from = Vector3.MoveTowards(_from, _to, Speed * Time.deltaTime);
                     _transform.position = _from;
                     yield return null;
@@ -73,7 +70,10 @@ namespace Funk
         
         void Update()
         {
-            if (!isLocalPlayer) return;
+            if (!isLocalPlayer)
+            {
+                return;
+            }
 
             var axisH = Input.GetAxis("Horizontal");
             var axisV = Input.GetAxis("Vertical");
