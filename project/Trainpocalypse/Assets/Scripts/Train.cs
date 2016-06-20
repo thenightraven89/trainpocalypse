@@ -1,15 +1,19 @@
 ﻿using Funk.Data;
-using Funk.Collision;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
-using UnityEngine.Networking;
 
 namespace Funk
 {
-    public class Train : NetworkBehaviour, ICollisionTirgger
+    public class Train : MonoBehaviour, IActionProvider
     {
+        private const string PREFIX_AXIS_HORIZONTAL = "Horizontal";
+        private const string PREFIX_AXIS_VERTICAL = "Vertical";
+
+        private string _inputSuffix;
+
+        private ICollection<IPlaybackAction> _actions;
+
         public string TrainName { get; set; }
         public float Speed { get; set; }
 
@@ -24,23 +28,65 @@ namespace Funk
         private Transform _transform;
         private Coroutine _moveCoroutine;
 
-        public event EventHandler<CollisionEventArgs> OnTrigger;
+        private float _axisH;
+        private float _axisV;
 
         private void Start()
         {
             _transform = transform;
             _direction = _transform.forward;
             _dominoTrail = new List<GameObject>();
+            _actions = new List<IPlaybackAction>();
             _moveCoroutine = StartCoroutine(Move());
+        }
+
+        public void AssignInputMap(InputMap inputMap)
+        {
+            _inputSuffix = ((byte)inputMap).ToString();
+        }
+
+        private void Update()
+        {
+            _axisH = Input.GetAxis(PREFIX_AXIS_HORIZONTAL + _inputSuffix);
+            _axisV = Input.GetAxis(PREFIX_AXIS_VERTICAL + _inputSuffix);
+
+            if (_axisH < 0 && _direction != Vector3.left)
+                _direction = Vector3.left;
+
+            if (_axisH > 0 && _transform.forward != Vector3.right)
+                _direction = Vector3.right;
+
+            if (_axisV > 0 && _transform.forward != Vector3.back)
+                _direction = Vector3.back;
+
+            if (_axisV < 0 && _transform.forward != Vector3.forward)
+                _direction = Vector3.forward;
         }
 
         private IEnumerator Move()
         {
             while (true)
             {
+                if (_cachedSteeringData != null)
+                {
+                    _transform.position = _cachedSteeringData.Position;
+                    _transform.rotation = Quaternion.LookRotation(
+                        _cachedSteeringData.Direction,
+                        Vector3.up);
+
+                    _cachedSteeringData = null;
+                }
+                
                 _from = _transform.position;
-                _to = _from + _direction * _tileSize;
-                _transform.rotation = Quaternion.LookRotation(_direction, Vector3.up);
+                _to = _from + _transform.forward * _tileSize;
+
+                if (_direction != _transform.forward)
+                {
+                    _actions.Add(new TrainSteerAction(
+                        TrainName,
+                        _from,
+                        _direction));
+                }
 
                 while (_from != _to)
                 {
@@ -61,30 +107,24 @@ namespace Funk
             }
         }
 
-        public void Play(ActionType action)
+        private SteeringData _cachedSteeringData = null;
+
+        public class SteeringData
         {
-            if (!isLocalPlayer)
+            public Vector3 Position;
+            public Vector3 Direction;
+        }
+
+        public void Steer(Vector3 position, Vector3 direction)
+        {
+            _cachedSteeringData = new SteeringData()
             {
-                return;
-            }
-            switch (action)
-            {
-                case ActionType.MoveUp:
-                    _direction = Vector3.forward;
-                    break;
+                Position = position,
+                Direction = direction
+            };
 
-                case ActionType.MoveDown:
-                    _direction = Vector3.back;
-                    break;
-
-                case ActionType.MoveLeft:
-                    _direction = Vector3.left;
-                    break;
-
-                case ActionType.MoveRight:
-                    _direction = Vector3.right;
-                    break;
-            }
+            //_transform.position = position;
+            //_transform.rotation = Quaternion.LookRotation(direction, Vector3.up);
         }
 
         public void Explode()
@@ -100,18 +140,20 @@ namespace Funk
             _transform.rotation = rotation;
             Start();
         }
-
-        public void SubscribeToCollision(EventHandler<CollisionEventArgs> action)
-        {
-            OnTrigger += action;
-        }
-
+        
         private void OnTriggerEnter(Collider other)
         {
-            if (OnTrigger != null)
-            {
-                OnTrigger.Invoke(this, new CollisionEventArgs(this, other));
-            }
+
+        }
+
+        public ICollection<IPlaybackAction> GetActions()
+        {
+            return _actions;
+        }
+
+        public void ClearActions()
+        {
+            _actions.Clear();
         }
     }
 }

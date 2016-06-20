@@ -9,7 +9,6 @@ namespace Funk
         private const int PLAYER_LIFE = 10;
 
         private Match _match;
-        private MatchInput _input;
         private MatchPlayback _playback;
 
         private void Awake()
@@ -29,14 +28,14 @@ namespace Funk
                     Train = "RedTrain",
                     Block = "RedBlock",
                     InputMap = InputMap.KeyboardWASD }
-                //,
+                ,
 
-                //new PlayerSettings() {
-                //    Index = 1,
-                //    Name = "Player2",
-                //    Train = "BlueTrain",
-                //    Block = "BlueBlock",
-                //    InputMap = InputMap.KeyboardArrows }
+                new PlayerSettings() {
+                    Index = 1,
+                    Name = "Player2",
+                    Train = "BlueTrain",
+                    Block = "BlueBlock",
+                    InputMap = InputMap.KeyboardArrows }
             };
 
             var matchSettings = new MatchSettings(10, 4, 8, new PowerupSettings[] {
@@ -46,16 +45,12 @@ namespace Funk
                 new PowerupSettings(typeof(ExtraLifePowerup), 1, 30, 0.3f)});
 
             _match = new Match(mapSettings, playerSettings, matchSettings);
-            _input = new MatchInput(_match);
-            _playback = FindObjectOfType<MatchPlayback>();
-            _playback.SetMatch(_match);
+            _playback = new MatchPlayback(_match);
         }
 
         private void Update()
         {
-            var actions = _input.GetActions();
-            _playback.PlayAction(actions);
-            _playback.RunPowerUpSpawner(Time.deltaTime);
+            _playback.Update();
         }
     }
 }
